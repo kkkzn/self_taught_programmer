@@ -37,23 +37,11 @@ print(H1.calculate_perimeter())
 # 1s or 1side, etc. are regarded as syntax error
 # Does it mean I can't start a variable name from number?
 
-
 # Query 3
-# method override __add__
-class AlwaysPositive:
-    def __init__(self, number):
-        self.n = number
-
-    def __add__(self, other):
-        return abs(self.n + other.n)
-# Is it the convention that we use "other" here without definition?
-
-
-# Query 4
 try:
     'animals'.index('z')
 except:
     print('there is no z in the spelling')
 
-# Why doesn't the except header specify an error type?
-# How is Ln53:56 (try/except) different from if/else?
+# Why doesn't the except header specify an error type (like ValuError)?
+# How is Ln53:56 (try/except) different from the coding with if/else?
