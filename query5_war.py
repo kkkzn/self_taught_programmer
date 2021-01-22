@@ -15,22 +15,18 @@ class Card:
     def __lt__(self, c2):
         if self.value < c2.value:
             return True
-        if self.value == c2.value:
-            if self.suit < c2.suit:
-                return True
-            else:
-                return False
-        return False
+        elif self.value == c2.value:
+            return self.suit < c2.suit
+        else:
+            return False
 
     def __gt__(self, c2):
         if self.value > c2.value:
             return True
-        if self.value == c2.value:
-            if self.suit > c2.suit:
-                return True
-            else:
-                return False
-        return False
+        elif self.value == c2.value:
+            return self.suit > c2.suit
+        else:
+            return False
 
     def __repr__(self):
         v = self.values[self.value] + " of "\
@@ -47,11 +43,11 @@ class Deck:
                 self.cards.append(Card(i, j))
         shuffle(self.cards)
 
-    def rm_card(self):
+    def draw(self):
         if len(self.cards) == 0:
             return
         return self.cards.pop()
-# Ln53 is the first time I see [return] keyword is used with [.pop] method.
+# Ln49 is the first time I see [return] keyword is used with [.pop] method.
 # Please check if my assumption is correct.
 ## My assumption for what [return XXX.pop()] does:
 ## [return XXX.pop()] removes the last item from the container(XXX),
@@ -71,15 +67,13 @@ class Game:
         self.p1 = Player(name1)
         self.p2 = Player(name2)
 
-    def wins(self, winner):
+    def print_winner(self, winner):
         w = "{} wins this round"
-        w = w.format(winner)
-        print(w)
+        print(w.format(winner.name))
 
-    def draw(self, p1n, p1c, p2n, p2c):
+    def print_draw(self, p1, p2):
         d = "{} drew {}; {} drew {}"
-        d = d.format(p1n, p1c, p2n, p2c)
-        print(d)
+        print(d.format(p1.name, p1.card, p2.name, p2.card))
 
     def play_game(self):
         cards = self.deck.cards
@@ -89,31 +83,26 @@ class Game:
             resp = input(m)
             if resp == "q":
                 break
-            p1c = self.deck.rm_card()
-            p2c = self.deck.rm_card()
-            p1n = self.p1.name
-            p2n = self.p2.name
-            self.draw(p1n, p1c, p2n, p2c)
-            if p1c > p2c:
+            self.p1.card = self.deck.draw()
+            self.p2.card = self.deck.draw()
+            self.print_draw(self.p1, self.p2)
+            if self.p1.card > self.p2.card:
                 self.p1.wins += 1
-                self.wins(self.p1.name)
+                self.print_winner(self.p1)
             else:
                 self.p2.wins += 1
-                self.wins(self.p2.name)
-# What would happen here if I didn't define __lt__ and __gt__ in Ln15:33?
-# Can the program process [Ln97 p1c > p2c] correctly without Ln15:33?
+                self.print_winner(self.p2)
+# What would happen here if I didn't define __lt__ and __gt__ in Ln15:29?
+# Does the program process Ln89 correctly without Ln15:29?
 
 # As for this query, please check if my assumption is correct.
 ## My assumption:
-## __lt__ and __gt__ define the protocol of comparing cards (Ln16:22, Ln26:32).
-## This helps program compare cards, which have two values: value and suit.
+## __lt__ and __gt__ define the protocol of comparing cards (Ln15:21, Ln23:29).
+## This helps program compare cards that have two values: value and suit.
 ## Even though value and suit have been already converted into integers,
 ## program can't judge which value prevails the other so can't make a comparison.
-## So when you want your program to compare objects containing multiple values,
+## So when I want my program to compare objects containing multiple values,
 ## defining the protocol of comparison by __lt__ and __gt__ is necessary.
-
-# Another question about Ln15:33:
-# Do we really need Ln23 and Ln33?
                 
         win = self.winner(self.p1, self.p2)
         print("War is over. {} wins this war.".format(win))
@@ -121,9 +110,10 @@ class Game:
     def winner(self, p1, p2):
         if p1.wins > p2.wins:
             return p1.name
-        if p1.wins < p2.wins:
+        elif p1.wins < p2.wins:
             return p2.name
-        return "It was a tie!"
+        else:
+            return "It was a tie!"
 
 game = Game()
 game.play_game()
