@@ -1,3 +1,24 @@
+# 戦争ゲームのコードです。
+# __lt__ __gt__メソッドについて知りたいです。
+# Ln36:50で__lt__ __gt__を定義しているが、これがなぜ必要なのか？
+# 仮説を立てたので、その理解であっているか教えて欲しいです。
+
+## My assumption:
+## __lt__ and __gt__ define the protocol of comparing cards (Ln36:42, Ln44:50).
+## This helps program compare "cards" that have two values: value and suit.
+## Even though value and suit have been already converted into integers,
+## program can't judge which value prevails the other so can't make a comparison.
+## So when I want my program to compare objects containing multiple values,
+## defining the protocol of comparison by __lt__ and __gt__ is necessary.
+## 仮説:
+## __lt__、__gt__はカードの強さを比較するプロトコルを定義している。
+## カードは二つの別々の値（数字とマーク）を持っているため、どの順で比較するかの定義が必要。
+## その定義をLn36:50でやっている。
+## つまり、プログラムに２種類以上の値を持つオブジェクト同士を比較させたいときは、
+## __lt__, __gt__で、それらをどの様で比較すれば良いかを定める必要が発生してくる。
+
+
+
 class Card:
     suits = ("spades", "hearts",
              "diamonds", "clubs")
@@ -47,11 +68,6 @@ class Deck:
         if len(self.cards) == 0:
             return
         return self.cards.pop()
-# Ln49 is the first time I see [return] keyword is used with [.pop] method.
-# Please check if my assumption is correct.
-## My assumption for what [return XXX.pop()] does:
-## [return XXX.pop()] removes the last item from the container(XXX),
-## and returns the removed item.
 
 class Player:
     def __init__(self, name):
@@ -92,17 +108,6 @@ class Game:
             else:
                 self.p2.wins += 1
                 self.print_winner(self.p2)
-# What would happen here if I didn't define __lt__ and __gt__ in Ln15:29?
-# Does the program process Ln89 correctly without Ln15:29?
-
-# As for this query, please check if my assumption is correct.
-## My assumption:
-## __lt__ and __gt__ define the protocol of comparing cards (Ln15:21, Ln23:29).
-## This helps program compare cards that have two values: value and suit.
-## Even though value and suit have been already converted into integers,
-## program can't judge which value prevails the other so can't make a comparison.
-## So when I want my program to compare objects containing multiple values,
-## defining the protocol of comparison by __lt__ and __gt__ is necessary.
                 
         win = self.winner(self.p1, self.p2)
         print("War is over. {} wins this war.".format(win))
