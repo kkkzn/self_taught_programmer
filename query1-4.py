@@ -15,6 +15,8 @@ while True:
 
 # When exception occurs, for-else message "Not in the list!" also shows up.
 # How can I disable this for-else message while responding to exception?
+# exception が起こると"Not in the list"までprintされてしまう。
+# exceptionメッセージ "Please type a number or you can quir by typing q" だけprintするようできないだろうか？
 
 # Query 2
 class Hexagon:
@@ -35,7 +37,9 @@ H1 = Hexagon(3, 3, 4, 5, 6, 1)
 print(H1.calculate_perimeter())
 
 # 1s or 1side, etc. are regarded as syntax error
-# Does it mean I can't start a variable name from number?
+# Does it mean we can't begin a parameter name with number?
+# Hexagonクラスの初期化でparameterに1sや1sideと打つとsyntax errorになってしまう。
+# parameter名を数字から始めることはできない、ということなのだろうか？
 
 # Query 3
 try:
@@ -43,5 +47,8 @@ try:
 except:
     print('there is no z in the spelling')
 
-# Why doesn't the except header specify an error type (like ValuError)?
-# How is Ln53:56 (try/except) different from the coding with if/else?
+# Why doesn't the except header specify an error type (like ValueError)?
+# How is Ln45:48 (try/except) different from the coding with if/else?
+# （↑は独学プログラマーの本で出てきたコード）exceptの後にエラータイプが設定されていないけど動く。
+# ValueErrorとか打たなくてもOKでしょうか？
+# Ln45:48についてはif/else使ってもOK？　違いは何？
