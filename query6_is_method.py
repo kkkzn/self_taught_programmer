@@ -1,4 +1,4 @@
-# is keyword
+# is キーワードについて知りたいです。
 
 class Person:
     def __init__(self):
@@ -7,10 +7,11 @@ class Person:
 bob = Person()
 same_bob = bob
 print(bob is same_bob)
-
+# ↑True が返ってくる
 
 another_bob = Person()
 print(bob is another_bob)
+# ↑Falseが返ってくる
 
 ## Check if I am guessing correctly:
 ## Ln 7 instantiates bob as an object in Person class
@@ -22,5 +23,3 @@ print(bob is another_bob)
 ## Ln 13 checks the validity of the following statement:
 ## bob is another_bob. So this is not true.
 ## If another Ln assigns this another_bob a variable bob, Ln 12 will become true.
-
-## つまり、=は代入演算子であって等価記号ではないということだよね？
